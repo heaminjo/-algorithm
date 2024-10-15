@@ -27,10 +27,17 @@ public class Member {
     //별명
     @Column(name = "alias",nullable = false,unique = true,length = 8)
     private String alias;
-
+    //주소
     @Column(name = "address",nullable = false)
     private String address;
 
+    //관심태그
+    @Convert(converter = StringListConverter.class)
+    private List<String> tag;
 
+    //팔로워 수
+    private int follower;
 
+    //팔로윙 수
+    private int followee;
 }
