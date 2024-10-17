@@ -40,4 +40,21 @@ public class Member {
 
     //팔로윙 수
     private int followee;
+
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+    
+    @Builder
+    public Member(String email,String pwd,String alias,String address,
+                  List<String> tag, int follower,int followee,
+                  Authority authority){
+        this.email = email;
+        this.pwd = pwd;
+        this.alias = alias;
+        this.address = address;
+        this.tag = tag;
+        this.follower = follower;
+        this.followee = followee;
+        this.authority = authority;
+    }
 }
