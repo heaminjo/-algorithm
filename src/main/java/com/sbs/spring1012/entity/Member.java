@@ -41,6 +41,10 @@ public class Member {
     //팔로윙 수
     private int followee;
 
+    //탈퇴여부
+    @Column(name = "is_withdraw")
+    private boolean isWithdrow;
+    
     @Enumerated(EnumType.STRING)
     private Authority authority;
     
