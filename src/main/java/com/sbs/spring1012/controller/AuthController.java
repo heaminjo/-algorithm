@@ -1,6 +1,8 @@
 package com.sbs.spring1012.controller;
 
-import com.sbs.spring1012.dto.MemberDto;
+import com.sbs.spring1012.dto.MemberReqDto;
+import com.sbs.spring1012.dto.MemberResDto;
+import com.sbs.spring1012.dto.TokenDto;
 import com.sbs.spring1012.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,30 +16,22 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http/localhost:3000")
 public class AuthController {
     private final AuthService authService;
-
     //회원가입 여부 확인
     @GetMapping("/exists/{email}")
     public ResponseEntity<Boolean> memberExists(@PathVariable String email){
-        log.info("email : {}",email);
         boolean isTrue = authService.isMember(email);
 
         return ResponseEntity.ok(!isTrue);
     }
-
+//회원가입
     @PostMapping("/signup")
-    public ResponseEntity<Boolean> signup(@RequestBody MemberDto memberDto){
-        log.info("memberDto:{}",memberDto);
-        boolean isTrue = authService.signup(memberDto);
-
-        return ResponseEntity.ok(isTrue);
+    public ResponseEntity<MemberResDto> signup(@RequestBody MemberReqDto memberReqDto){
+        return ResponseEntity.ok(authService.signup(memberReqDto));
     }
-
-    @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody MemberDto memberDto){
-        log.info("memberDto:{}",memberDto);
-        boolean isTrue = authService.login(memberDto.getEmail(),memberDto.getPwd());
-
-        return ResponseEntity.ok(isTrue);
-    }
-
+//로그인
+@PostMapping("/login")
+public ResponseEntity<TokenDto> login(@RequestBody MemberReqDto memberReqDto) {
+    log.info("memberDto:{}", memberReqDto);
+    return ResponseEntity.ok(authService.login(memberReqDto));
+}
 }
