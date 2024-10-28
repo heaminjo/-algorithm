@@ -13,5 +13,6 @@ public class BoardReqDto {
     private String title;
     private String content;
     private String boardType;
+    private String image;
     private List<String> tag;
 }
