@@ -1,7 +1,7 @@
 package com.sbs.spring1012.controller;
 
-import com.sbs.spring1012.dto.MemberDto;
-import com.sbs.spring1012.entity.Member;
+import com.sbs.spring1012.dto.MemberResDto;
+import com.sbs.spring1012.service.AuthService;
 import com.sbs.spring1012.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,22 +12,17 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/users")
+@RequestMapping("/member") //대표경로 지정
+@RequiredArgsConstructor //생성자를 통한 의존성 주입
+@CrossOrigin(origins = "http/localhost:3000")
+
 public class MemberController {
     private final MemberService memberService;
 
-    //회원 전체 조회
-    @GetMapping("/list")
-    public ResponseEntity<List<MemberDto>> memberList(){
-        List<MemberDto> list = memberService.getMemberList();
-        return ResponseEntity.ok(list);
+    //회원 검색(별명으로 검색)
+    @GetMapping("/search/{alias}")
+    public ResponseEntity<MemberResDto> userSearch(@PathVariable String alias){
+        MemberResDto memberResDto = memberService.userSearch(alias);
+        return ResponseEntity.ok(memberResDto);
     }
-
-    //회원 상세 조회
-//    @GetMapping("/detail/{email}")
-//    public ResponseEntity<Boolean> memberDetail(@PathVariable String email){
-//        MemberDto memberDto = memberService.getMemberDetail(email);
-//    }
 }
