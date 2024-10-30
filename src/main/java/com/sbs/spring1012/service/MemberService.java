@@ -29,6 +29,14 @@ public class MemberService {
 
         return memberDtos;
     }
+    
+    //회원검색
+    public MemberResDto userSearch(String alias){
+        Optional<Member> member = memberRepository.findByAlias(alias);
+        //member에 값이 있다면 dto로 변환하여 방환 아니라면 null반환
+        return member.map(MemberResDto::of).orElse(null);
+    }
+
     //회원 상세정보
     public MemberDto getMemberDetail(String email){
         Member member = memberRepository.findByEmail(email)
