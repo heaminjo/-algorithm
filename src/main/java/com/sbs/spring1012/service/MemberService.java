@@ -17,18 +17,6 @@ import java.util.Optional;
 
 public class MemberService {
     private final MemberRepository memberRepository;
-
-    public List<MemberDto> getMemberList(){
-        List<Member> members = memberRepository.findAll();
-        List<MemberDto> memberDtos = new ArrayList<>();
-
-        for(Member member : members){
-            MemberDto memberDto = covertDto(member);
-            memberDtos.add(memberDto);
-        }
-
-        return memberDtos;
-    }
     
     //회원검색
     public MemberResDto userSearch(String alias){
@@ -37,42 +25,9 @@ public class MemberService {
         return member.map(MemberResDto::of).orElse(null);
     }
 
-    //회원 상세정보
-    public MemberDto getMemberDetail(String email){
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(()-> new RuntimeException("해당 회원이 존재하지않습니다."));
-        return covertDto(member);
-    }
-
-    //회원수정
-    public boolean modifyMember(MemberDto memberDto){
-        try {
-            Member member = memberRepository.findByEmail(memberDto.getEmail())
-                    .orElseThrow(()-> new RuntimeException("해당 회원이 존재하지않습니다."));
-
-            // 수정이 가능한 프로퍼티들만 set하여 save할 경우 update 로 들어간다.
-            member.setName(memberDto.getName());
-            member.setImage(memberDto.getImage());
-            memberRepository.save(member);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //회원삭제
-    public boolean deleteMember(String email){
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(()-> new RuntimeException("해당 회원이 존재하지않습니다."));
-
-    }
-    private MemberDto covertDto(Member member){
-        MemberDto memberDto = new MemberDto();
-        memberDto.setEmail(member.getEmail());
-        memberDto.setName(member.getName());
-        memberDto.setImage(member.getImage());
-        memberDto.setPwd(member.getPwd());
-        memberDto.setRegDate(member.getRegDate());
-        return memberDto;
+    //회원 상세조회
+    public MemberResDto getMemberDetail(Long id){
+        Member member = memberRepository.findById(id).orElseThrow(()-> new RuntimeException("해당 회원이 존재하지 않습니다."));
+        return MemberResDto.of(member);
     }
 }
