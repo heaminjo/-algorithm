@@ -25,4 +25,13 @@ public class MemberController {
         MemberResDto memberResDto = memberService.userSearch(alias);
         return ResponseEntity.ok(memberResDto);
     }
+
+    // 회원 상세 조회
+    @GetMapping("/detail")
+    public ResponseEntity<MemberResDto> memberDetail(){
+        Long id = SecurityUtil.getCurrentMemberId();
+        log.info("id : {} ", id);
+        MemberResDto memberResDto = memberService.getMemberDetail(id);
+        return ResponseEntity.ok(memberResDto);
+    }
 }
