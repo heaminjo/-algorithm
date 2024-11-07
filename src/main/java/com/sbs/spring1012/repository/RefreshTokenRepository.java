@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken,Long> {
+    boolean existsByRefreshToken(String refreshToken);
     boolean existsByMember(Member member);
-    void deleteByMember(Member member);
+    Optional<RefreshToken> findByMember(Member member);
+
+    @Modifying
+    @Query("DELETE FROM RefreshToken r WHERE r.member = :member")
+    void deleteByMember(@Param("member") Member member);
 }
