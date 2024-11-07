@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "member")
-    private Long member_seq;
+    @Column(name = "member_id")
+    private Long id;
 
     //이메일
     @Column(name = "email",nullable = false,unique = true)
