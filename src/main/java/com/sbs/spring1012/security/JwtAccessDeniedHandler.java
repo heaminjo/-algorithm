@@ -11,11 +11,8 @@ import java.io.IOException;
 
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
-
-    @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
-            throws IOException, ServletException {
-        // 필요한 권한이 없이 접근하려 할때 403
-        response.sendError(HttpServletResponse.SC_FORBIDDEN);
+    @Override // 권한이 없는 경우 403 Forbidden 에러를 리턴할 클래스
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        response.sendError(HttpServletResponse.SC_FORBIDDEN); // 권한이 없으면 403 Forbidden 에러를 리턴
     }
 }
